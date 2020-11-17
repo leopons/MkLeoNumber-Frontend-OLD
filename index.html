@@ -10,6 +10,7 @@
     <link href='https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700,900' rel='stylesheet' type='text/css'>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/lodash@4.16.0"></script>
   </head>
 
   <body>
@@ -28,9 +29,13 @@
       <div>
         SearchPage
         <input v-model="search_term" @keyup="fetchData">
+        <span v-if="loading">Loading...</span>
         <li v-for="player in players" :key="player.id">
           <router-link :to="'/path/' + player.id">{{ player.tag }}</router-link>
         </li>
+        <div v-if="error" class="error">
+          {{ error }}
+        </div>
       </div>
     </script>
 

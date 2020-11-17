@@ -4,13 +4,13 @@ const SearchPage = Vue.component('search-page', {
   data () {
     return {
       search_term: null,
-      loading: true,
+      loading: false,
       error: null,
       players: null
     }
   },
   methods: {
-    fetchData () {
+    fetchData: _.debounce(function(e) {
       this.error = null
       this.loading = true
       const fetchedTerm = this.search_term
@@ -20,8 +20,6 @@ const SearchPage = Vue.component('search-page', {
         .then(async response => {
           const data = await response.json();
           this.loading = false
-          // make sure this request is the last one we did, discard otherwise
-          if (this.search_term !== fetchedTerm) return
           // check for error response
           if (!response.ok) {
             const error = data
@@ -34,8 +32,7 @@ const SearchPage = Vue.component('search-page', {
           this.error = error.toString()
           console.error("There was an error!", error);
         });
-
-    }
+      }, 150)
   },
   template: '#search-page-template'
 })
