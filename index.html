@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      Smash Upset Distance
+    </title>
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700,900' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700,900' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>Hello App!</h1>
+
+      <router-link to="/">Go to home</router-link>
+      <router-link to="/path/1554284">Go to path uncalin</router-link>
+      <router-link to="/path/1554">Go to path 404</router-link>
+
+      <router-view></router-view>
+
+    </div>
+
+    <script type="text/x-template" id="search-page-template">
+      <p>SearchPage</p>
+    </script>
+
+    <script type="text/x-template" id="path-page-template">
+      <div class="path">
+        <div v-if="loading" class="loading">
+          Loading...
+        </div>
+
+        <div v-if="error" class="error">
+          {{ error }}
+        </div>
+
+        <div v-if="not_found" class="error">
+          Not found !
+        </div>
+
+        <div v-if="path" class="content">
+          {{ path }}
+        </div>
+      </div>
+    </script>
+
+    <script src="app.js"></script>
+  </body>
+</html>

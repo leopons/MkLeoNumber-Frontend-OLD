@@ -1,0 +1,79 @@
+const BACKEND_ROOT = 'https://smash-upset-distance.ew.r.appspot.com/'
+
+const SearchPage = Vue.component('search-page', {
+  data: function () {
+    return {
+      count: 0
+    }
+  },
+  template: '#search-page-template'
+})
+
+const PathPage = Vue.component('path-page', {
+  data () {
+    return {
+      loading: true,
+      path: null,
+      error: null,
+      not_found: false
+    }
+  },
+  created () {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.fetchData()
+  },
+  watch: {
+    // call again the method if the route changes
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData () {
+      this.error = this.path = null
+      this.not_found = false
+      this.loading = true
+      const fetchedId = this.$route.params.id
+
+      // GET request using fetch with error handling
+      fetch(BACKEND_ROOT + "upsets/playerpath/" + fetchedId)
+        .then(async response => {
+          const data = await response.json();
+          this.loading = false
+          // make sure this request is the last one we did, discard otherwise
+          if (this.$route.params.id !== fetchedId) return
+          // check for error response
+          if (response.status == 404){
+            this.not_found = true
+          } else if (!response.ok) {
+            const error = data
+            return Promise.reject(error)
+          } else {
+            this.path = data
+          }
+        })
+        .catch(error => {
+          this.error = error.toString()
+          console.error("There was an error!", error);
+        });
+
+    }
+  },
+  template: '#path-page-template'
+})
+
+
+const router = new VueRouter({
+  routes: [
+    { path: '/', component: SearchPage },
+    { path: '/path/:id', component: PathPage }
+  ]
+})
+
+
+const app = new Vue({
+  router: router,
+  data: {
+    product: 'Socks',
+    description: 'A pair of warm fuzzy socks'
+  }
+}).$mount('#app')
