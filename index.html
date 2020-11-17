@@ -25,7 +25,13 @@
     </div>
 
     <script type="text/x-template" id="search-page-template">
-      <p>SearchPage</p>
+      <div>
+        SearchPage
+        <input v-model="search_term" @keyup="fetchData">
+        <li v-for="player in players" :key="player.id">
+          <router-link :to="'/path/' + player.id">{{ player.tag }}</router-link>
+        </li>
+      </div>
     </script>
 
     <script type="text/x-template" id="path-page-template">

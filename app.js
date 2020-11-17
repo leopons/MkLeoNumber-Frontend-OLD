@@ -1,9 +1,40 @@
 const BACKEND_ROOT = 'https://smash-upset-distance.ew.r.appspot.com/'
 
 const SearchPage = Vue.component('search-page', {
-  data: function () {
+  data () {
     return {
-      count: 0
+      search_term: null,
+      loading: true,
+      error: null,
+      players: null
+    }
+  },
+  methods: {
+    fetchData () {
+      this.error = null
+      this.loading = true
+      const fetchedTerm = this.search_term
+
+      // GET request using fetch with error handling
+      fetch(BACKEND_ROOT + "upsets/players/search/?term=" + fetchedTerm)
+        .then(async response => {
+          const data = await response.json();
+          this.loading = false
+          // make sure this request is the last one we did, discard otherwise
+          if (this.search_term !== fetchedTerm) return
+          // check for error response
+          if (!response.ok) {
+            const error = data
+            return Promise.reject(error)
+          } else {
+            this.players = data
+          }
+        })
+        .catch(error => {
+          this.error = error.toString()
+          console.error("There was an error!", error);
+        });
+
     }
   },
   template: '#search-page-template'
