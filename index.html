@@ -30,8 +30,17 @@
         SearchPage
         <input v-model="search_term" @keyup="fetchData">
         <span v-if="loading">Loading...</span>
+        <div v-if="no_results">
+          No players found
+        </div>
         <li v-for="player in players" :key="player.id">
-          <router-link :to="'/path/' + player.id">{{ player.tag }}</router-link>
+          <router-link :to="'/path/' + player.id">
+            {{ player.tag }}
+            <img v-if="player.main_character" :src="'https://smashdata.gg/static/assets/stock_icons/ultimate/' + player.main_character + '_0.png'"></img>
+            <div>
+              Last tournament : <span v-if="player.last_tournament"> {{ player.last_tournament.name }} </span><span v-else>Unknown</span>
+            </div>
+          </router-link>
         </li>
         <div v-if="error" class="error">
           {{ error }}

@@ -6,33 +6,42 @@ const SearchPage = Vue.component('search-page', {
       search_term: null,
       loading: false,
       error: null,
-      players: null
+      players: null,
+      no_results: false,
     }
   },
   methods: {
     fetchData: _.debounce(function(e) {
       this.error = null
       this.loading = true
+      this.no_results = false
       const fetchedTerm = this.search_term
-
-      // GET request using fetch with error handling
-      fetch(BACKEND_ROOT + "upsets/players/search/?term=" + fetchedTerm)
-        .then(async response => {
-          const data = await response.json();
-          this.loading = false
-          // check for error response
-          if (!response.ok) {
-            const error = data
-            return Promise.reject(error)
-          } else {
-            this.players = data
-          }
-        })
-        .catch(error => {
-          this.error = error.toString()
-          console.error("There was an error!", error);
-        });
-      }, 150)
+      if (fetchedTerm) {
+        // GET request using fetch with error handling
+        fetch(BACKEND_ROOT + "upsets/players/search/?term=" + fetchedTerm)
+          .then(async response => {
+            const data = await response.json();
+            this.loading = false
+            // check for error response
+            if (!response.ok) {
+              const error = data
+              return Promise.reject(error)
+            } else {
+              this.players = data
+              if (this.players.length == 0) {
+                this.no_results = true
+              }
+            }
+          })
+          .catch(error => {
+            this.error = error.toString()
+            console.error("There was an error!", error);
+          });
+      } else {
+        this.loading = false
+        this.players = null
+      }
+    }, 150)
   },
   template: '#search-page-template'
 })
