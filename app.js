@@ -52,7 +52,8 @@ const PathPage = Vue.component('path-page', {
       loading: true,
       path: null,
       error: null,
-      not_found: false
+      not_found: false,
+      no_path: false
     }
   },
   created () {
@@ -69,6 +70,7 @@ const PathPage = Vue.component('path-page', {
       this.error = this.path = null
       this.not_found = false
       this.loading = true
+      this.no_path = false
       const fetchedId = this.$route.params.id
 
       // GET request using fetch with error handling
@@ -85,7 +87,11 @@ const PathPage = Vue.component('path-page', {
             const error = data
             return Promise.reject(error)
           } else {
-            this.path = data
+            if (data.path_exist){
+              this.path = data.path
+            } else {
+              this.no_path = true
+            }
           }
         })
         .catch(error => {
@@ -96,6 +102,44 @@ const PathPage = Vue.component('path-page', {
     }
   },
   template: '#path-page-template'
+})
+
+
+const PlayerBox = Vue.component('player-box', {
+  data () {
+    return {
+      loading: true,
+      twittertag: null,
+    }
+  },
+  props: ['id', 'tag', 'maincharacter'],
+  created () {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.fetchData()
+  },
+  methods: {
+    fetchData () {
+      // GET request using fetch with error handling
+      fetch(BACKEND_ROOT + "upsets/twittertag/player/" + this.id)
+        .then(async response => {
+          const data = await response.json();
+          this.loading = false
+          // check for error response
+          if (!response.ok) {
+            const error = data
+            return Promise.reject(error)
+          } else {
+            this.twittertag = data.twitter_tag
+          }
+        })
+        .catch(error => {
+          console.error("There was an error!", error);
+        });
+
+    }
+  },
+  template: '#player-box-template'
 })
 
 

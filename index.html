@@ -62,8 +62,33 @@
           Not found !
         </div>
 
+        <div v-if="no_path" class="error">
+          No Path !
+        </div>
+
         <div v-if="path" class="content">
-          {{ path }}
+          <li v-for="node in path">
+            <player-box :id="node.upset.winner.id" :tag="node.upset.winner.tag" :maincharacter="node.upset.winner.main_character"></player-box>
+            <div>
+              {{ node.upset.winner.tag }} -
+              {{ node.upset.winner_score }} -
+              {{ node.upset.tournament.name }} -
+              {{ node.upset.tournament.start_date }} -
+              {{ node.upset.loser_score }} -
+              {{ node.upset.loser.tag }}
+            </div>
+          </li>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="player-box-template">
+      <div class="player_box">
+        <div class="name">
+          <b>{{ tag }}</b><img v-if="maincharacter" :src="'https://smashdata.gg/static/assets/stock_icons/ultimate/' + maincharacter + '_0.png'"></img>
+        </div>
+        <div v-if="twittertag" class="content">
+          {{ twittertag }}
         </div>
       </div>
     </script>
