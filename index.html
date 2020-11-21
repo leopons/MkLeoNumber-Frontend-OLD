@@ -56,10 +56,11 @@
 
     <script type="text/x-template" id="search-page-template">
       <div class="search-page">
-        <h2>How many wins away are you from MkLeo&nbsp;?</h2>
-        <p>Did you beat someone who've beaten MkLeo&nbsp;?</p>
-        <p>Or maybe you beat someone who've beaten someone who've beaten MkLeo&nbsp;?</p>
-        <h3>Get your MkLeo upset distance now&nbsp;!</h3>
+        <h2>Find your shortest wins path to MkLeo&nbsp;!</h2>
+        <p>Did <b>you</b> beat <b>someone</b> who've beaten <b>MkLeo</b>&nbsp;?</p>
+        <img class="search-page__example" src="img/example1.png"></img>
+        <p>Or maybe <b>you</b> beat <b>someone</b> who've beaten <b>someone</b> who've beaten <b>MkLeo</b>&nbsp;?</p>
+        <img class="search-page__example" src="img/example2.png"></img>
         <input placeholder="Search for your player tag" class="search-page__input" v-model="search_term" @keyup="fetchData">
         <div v-if="search_term" class="search_box">
           <span v-if="loading">Loading...</span>

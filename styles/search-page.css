@@ -14,16 +14,23 @@
   font-weight: 600;
   margin: 20px 30px;
   font-size: 1.4em;
+  color: #59bdcd;
+  text-shadow: 2px 2px black;
 }
 
 .search-page > p {
   margin: 2px 30px;
   font-size: 0.9em;
+  font-weight: 200;
 }
 
-.search-page > h3 {
-  margin: 30px;
-  font-size: 1.1em;
+.search-page > p > b {
+  font-weight: 700;
+}
+
+.search-page__example {
+  margin: 10px;
+  width: 90%;
 }
 
 .search-page__input {
@@ -37,6 +44,7 @@
   color: white;
   font-weight: 700;
   font-size: 1.2em;
+  margin-top: 20px;
 }
 
 .search-page__input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -122,19 +130,24 @@ a.player-result {
 }
 
 @media (min-width: 540px) {
+  .search-page__example {
+    height: 40px;
+    width: auto;
+  }
 }
 
 @media (min-width: 768px) {
   .search-page > h2 {
     font-size: 1.7em;
+    margin: 30px 40px;
   }
 
   .search-page > p {
     font-size: 1em;
   }
 
-  .search-page > h3 {
-    font-size: 1.3em;
+  .search-page__example {
+    height: 50px;
   }
 }
 
@@ -142,19 +155,11 @@ a.player-result {
   .search-page > h2 {
     font-size: 2em;
   }
-
-  .search-page > h3 {
-    font-size: 1.5em;
-  }
 }
 
 @media (min-width: 1200px) {
   .search-page > h2 {
     font-size: 2.5em;
-  }
-
-  .search-page > h3 {
-    font-size: 2em;
   }
 
   .search_box {
