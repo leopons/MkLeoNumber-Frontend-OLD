@@ -112,3 +112,28 @@
   height: 20px;
   margin: 2px;
 }
+
+.path-list__mkleo {
+  height: 300px;
+  width: 300px !important;
+  position: relative;
+}
+
+.path-list__mkleo > .player-box {
+  font-size: 1.7em;
+  padding: 25px 100px 30px 40px;
+  margin-top: 50px;
+  margin-right: 70px;
+}
+
+.path-list__mkleo > .player-box > .player-box__twittertag {
+  text-align: left;
+  font-size: 0.5em;
+}
+
+.path-list__mkleo-joker {
+  position: absolute;
+  height: 300px;
+  width: 300px;
+  left: 100px;
+}
