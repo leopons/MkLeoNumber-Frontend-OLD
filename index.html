@@ -107,10 +107,20 @@
           No Path !
         </div>
 
-        <div v-if="path" class="content">
-          <ul class="path-list">
+        <div v-if="path" class="upset-path">
+          <div class="upset-path__side-column --left"></div>
+          <ul class="upset-path__path-list">
             <li v-for="node in path">
-              <player-box :id="node.upset.winner.id" :tag="node.upset.winner.tag" :maincharacter="node.upset.winner.main_character"></player-box>
+              <div class="player-row">
+                <div :class="'player-row__side-column --depth-' + node.node_depth">
+                  <div> {{ node.node_depth }} </div>
+                  <div class="player-row__side-line"></div>
+                </div>
+                <player-box :id="node.upset.winner.id" :tag="node.upset.winner.tag" :maincharacter="node.upset.winner.main_character"></player-box>
+                <div :class="'player-row__side-column --depth-' + node.node_depth">
+                  <div class="player-row__side-line"></div>
+                </div>
+              </div>
               <div class="path-list__pipe">|</div>
               <div class="tournament-box">
                 <div class="tournament-box__name">{{ node.upset.tournament.name }}</div>
@@ -136,19 +146,28 @@
               <div class="path-list__pipe">|</div>
             </li>
             <li class="path-list__mkleo">
-              <div class="player-box">
-                <div class="player-box__name">
-                  <b>MkLeo</b>
+              <div class="player-row">
+                <div class="player-row__side-column">
+                  <div class="player-row__side-line"></div>
                 </div>
-                <div class="player-box__twittertag">
-                  <a href="https://twitter.com/Mkleosb" target="_blank">
-                    @Mkleosb
-                  </a>
+                <div class="player-box">
+                  <div class="player-box__name">
+                    <b>MkLeo</b>
+                  </div>
+                  <div class="player-box__twittertag">
+                    <a href="https://twitter.com/Mkleosb" target="_blank">
+                      @Mkleosb
+                    </a>
+                  </div>
                 </div>
+                <div class="player-row__side-column">
+                  <div class="player-row__side-line"></div>
+                </div>
+                <img class="path-list__mkleo-joker" src="img/joker.png"></img>
               </div>
-              <img class="path-list__mkleo-joker" src="img/joker.png"></img>
             </li>
           </ul>
+          <div class="upset-path__side-column"></div>
         </div>
       </div>
     </script>

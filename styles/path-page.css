@@ -1,17 +1,33 @@
 
 /* PATH PAGE */
 
+.upset-path {
+  display: flex;
+}
 
-.path-list {
+.upset-path__side-column {
+  width: 20px;
+  margin: 60px 0px 208px 30px;
+  display: none;
+}
+
+.upset-path__side-column.--left {
+  background-image: url("../img/ruler.svg");
+  background-repeat: repeat-y;
+  background-size: 20px;
+}
+
+.upset-path__path-list {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 20px 30px;
+  padding: 20px 20px;
+  flex: 1;
 }
 
-.path-list > li {
+.upset-path__path-list > li {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,6 +38,48 @@
   color: grey;
   margin: 4px;
   font-size: 0.9em;
+}
+
+
+.player-row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-row__side-column {
+  flex: 1;
+  text-align: left;
+  font-weight: 800;
+  font-size: 2.4em;
+  color: #9c9c9c;
+  display: flex;
+  align-items: center;
+}
+
+.player-row__side-column.--depth-4 {
+  color: #a29c83;
+}
+
+.player-row__side-column.--depth-3 {
+  color: #ad9f5d;
+}
+
+.player-row__side-column.--depth-2 {
+  color: #c6af44;
+}
+
+.player-row__side-column.--depth-1 {
+  color: #ffda27;
+}
+
+.player-row__side-line {
+  flex: 1;
+  height: 0;
+  border-bottom: 1px solid;
+  margin: 20px;
+  opacity: 0.3;
 }
 
 .player-box {
@@ -115,18 +173,24 @@
 
 .path-list__mkleo {
   height: 300px;
-  width: 300px !important;
   position: relative;
 }
 
-.path-list__mkleo > .player-box {
-  font-size: 1.7em;
-  padding: 25px 100px 30px 40px;
-  margin-top: 50px;
-  margin-right: 70px;
+.path-list__mkleo .player-row {
+  padding-top: 40px;
 }
 
-.path-list__mkleo > .player-box > .player-box__twittertag {
+.path-list__mkleo .player-row__side-column {
+  display: none;
+}
+
+.path-list__mkleo .player-box {
+  font-size: 1.7em;
+  padding: 25px 90px 30px 30px;
+  margin-right: 30px;
+}
+
+.path-list__mkleo .player-box__twittertag {
   text-align: left;
   font-size: 0.5em;
 }
@@ -135,5 +199,28 @@
   position: absolute;
   height: 300px;
   width: 300px;
-  left: 100px;
+  left: calc(50% - 50px);
+  top: 0;
+}
+
+@media (min-width: 540px) {
+  .path-list__mkleo .player-box {
+    padding: 25px 100px 30px 40px;
+    margin-right: 70px;
+  }
+  .upset-path__path-list {
+    padding: 20px 30px;
+  }
+  .player-row__side-column {
+    font-size: 3em;
+  }
+}
+
+@media (min-width: 768px) {
+  .upset-path__side-column {
+    display: block;
+  }
+  .path-list__mkleo .player-row__side-column {
+    display: block;
+  }
 }
