@@ -73,39 +73,47 @@ const PathPage = Vue.component('path-page', {
   },
   methods: {
     fetchData () {
-      this.error = this.path = null
-      this.not_found = false
-      this.loading = true
-      this.no_path = false
-      const fetchedId = this.$route.params.id
+      if (this.ismkleo) {
+        this.loading = false
+      } else {
+        this.error = this.path = null
+        this.not_found = false
+        this.loading = true
+        this.no_path = false
+        const fetchedId = this.$route.params.id
 
-      // GET request using fetch with error handling
-      fetch(BACKEND_ROOT + "upsets/playerpath/" + fetchedId)
-        .then(async response => {
-          const data = await response.json();
-          this.loading = false
-          // make sure this request is the last one we did, discard otherwise
-          if (this.$route.params.id !== fetchedId) return
-          // check for error response
-          if (response.status == 404){
-            this.not_found = true
-          } else if (!response.ok) {
-            const error = data
-            return Promise.reject(error)
-          } else {
-            if (data.path_exist){
-              this.path = data.path
+        // GET request using fetch with error handling
+        fetch(BACKEND_ROOT + "upsets/playerpath/" + fetchedId)
+          .then(async response => {
+            const data = await response.json();
+            this.loading = false
+            // make sure this request is the last one we did, discard otherwise
+            if (this.$route.params.id !== fetchedId) return
+            // check for error response
+            if (response.status == 404){
+              this.not_found = true
+            } else if (!response.ok) {
+              const error = data
+              return Promise.reject(error)
             } else {
-              this.no_path = true
+              if (data.path_exist){
+                this.path = data.path
+              } else {
+                this.no_path = true
+              }
             }
-          }
-        })
-        .catch(error => {
-          this.loading = false
-          this.error = error.toString()
-          console.error("There was an error!", error);
-        });
-
+          })
+          .catch(error => {
+            this.loading = false
+            this.error = error.toString()
+            console.error("There was an error!", error);
+          });
+      }
+    }
+  },
+  computed: {
+    ismkleo () {
+      return (this.$route.params.id == 222927)
     }
   },
   template: '#path-page-template'

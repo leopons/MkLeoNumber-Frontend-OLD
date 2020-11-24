@@ -209,6 +209,11 @@
   top: 0;
 }
 
+.sad-kirby {
+  width: 100px;
+  margin-top: 10px;
+}
+
 @media (min-width: 540px) {
   .path-list__mkleo .player-box {
     padding: 25px 100px 30px 40px;
@@ -228,5 +233,9 @@
   }
   .path-list__mkleo .player-row__side-column {
     display: block;
+  }
+  .sad-kirby {
+    width: 150px;
+    margin-top: 20px;
   }
 }

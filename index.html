@@ -127,17 +127,30 @@
           </div>
 
           <div v-if="no_path" class="path-page__text-content">
-            <div class="text-content__title">I'm sorry, there isn't any path that leads from you to MkLeo&nbsp;:&#8288;(</div>
+            <div class="text-content__title">I'm sorry, there isn't any path that leads from you to MkLeo...</div>
+            <img class="sad-kirby" src="img/kirby.png"></img>
             <div class="text-content__text">
               Try to play more registered sets by attending tournaments on <a href="https://smash.gg" target='_blank'>smash.gg</a> for example&nbsp;!
-              <br /> If you succed in outperforming someone just one time, come back here, it should be enough&nbsp;:)
+              <br /> If you succeed in beating someone better than you, come back here, it should be enough&nbsp;:)
             </div>
             <router-link to="/" class="text-content__cta">Go back to home</router-link>
           </div>
 
           <div v-if="path" class="path-page__text-content">
             <div class="text-content__title">You are {{ path[0].node_depth }} wins away from MkLeo&nbsp;!</div>
-            <div class="text-content__subtitle">Check your upset path below.</div>
+            <div v-if="path[0].node_depth == 1" class="text-content__subtitle">Don't act like you didn't know.</div>
+            <div v-if="(path[0].node_depth >= 2) && (path[0].node_depth < 4)" class="text-content__subtitle">Damn, that's impressive.</div>
+            <div v-if="(path[0].node_depth >= 4) && (path[0].node_depth < 7)" class="text-content__subtitle">Hey, that's actually not so far, don't you think&nbsp;?</div>
+            <div v-if="(path[0].node_depth >= 7)" class="text-content__subtitle">And I'm sure you can get closer&nbsp;!<br />Come back in a few good wins&nbsp;:)</div>
+            <div class="text-content__text">Check your upset path below.</div>
+          </div>
+
+          <div v-if="ismkleo" class="path-page__text-content">
+            <div class="text-content__title">Hey Leo&nbsp;!</div>
+            <div class="text-content__subtitle">Thanks for checking my app.</div>
+            <div class="text-content__text">
+              You are yourself, so I guess you are 0 wins away from yourself&nbsp;?
+            </div>
           </div>
         </div>
 
