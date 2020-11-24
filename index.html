@@ -82,8 +82,12 @@
               </router-link>
             </li>
           </ul>
-          <div v-if="error" class="error">
-            {{ error }}
+          <div v-if="error" class="text-content">
+            <div class="text-content__title">Hum, this is awkward.</div>
+            <div class="text-content__subtitle">My thing doesn't seem to work.</div>
+            <div class="text-content__text mt-3">Check your internet connection and try to reload the page.</div>
+            <div class="text-content__text">But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>&#8288;.</div>
+            <div class="text-content__text mt-2"><i>(I might be able to do something about it.)</i></div>
           </div>
         <div>
       </div>
@@ -100,7 +104,7 @@
             <div class="text-content__title">Hum, this is awkward.</div>
             <div class="text-content__subtitle">My thing doesn't seem to work.</div>
             <div class="text-content__text mt-3">Check your internet connection and try to reload the page.</div>
-            <div class="text-content__text">But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>.</div>
+            <div class="text-content__text">But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>&#8288;.</div>
             <div class="text-content__text mt-2"><i>(I might be able to do something about it.)</i></div>
             <router-link to="/" class="text-content__cta">Go back to home</router-link>
           </div>
@@ -115,9 +119,9 @@
           </div>
 
           <div v-if="no_path">
-            <div class="text-content__title">I'm sorry, there isn't any path that leads from you to MkLeo :(</div>
+            <div class="text-content__title">I'm sorry, there isn't any path that leads from you to MkLeo&nbsp;:&#8288;(</div>
             <div class="text-content__text">Try to play more registered sets by attending tournaments on <a href="https://smash.gg" target='_blank'>smash.gg</a> for example&nbsp;!</div>
-            <div class="text-content__text">If you succed in outperforming someone just one time, come back here, it should be enough :)</div>
+            <div class="text-content__text">If you succed in outperforming someone just one time, come back here, it should be enough&nbsp;:)</div>
             <router-link to="/" class="text-content__cta">Go back to home</router-link>
           </div>
 
