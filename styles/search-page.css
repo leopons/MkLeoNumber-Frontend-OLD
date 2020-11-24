@@ -16,6 +16,7 @@
   font-size: 1.4em;
   color: #59bdcd;
   text-shadow: 2px 2px black;
+  font-weight: 700;
 }
 
 .search-page > p {
@@ -48,8 +49,7 @@
 }
 
 .search-page__input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  font-weight: lighter;
-  font-style: italic;
+  font-weight: 200;
   color: #59bdcd;
   font-size: 1em;
   opacity: 1; /* Firefox */
