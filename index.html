@@ -11,6 +11,7 @@
     <link href='styles/common.css' rel='stylesheet' type='text/css'>
     <link href='styles/search-page.css' rel='stylesheet' type='text/css'>
     <link href='styles/path-page.css' rel='stylesheet' type='text/css'>
+    <link href='styles/loader.css' rel='stylesheet' type='text/css'>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://unpkg.com/lodash@4.16.0"></script>
@@ -62,9 +63,10 @@
         <p>Or maybe <b>you</b> beat <b>someone</b> who've beaten <b>someone</b> who've beaten <b>MkLeo</b>&nbsp;?</p>
         <img class="search-page__example" src="img/example2.png"></img>
         <input placeholder="Search for your player tag" class="search-page__input" v-model="search_term" @keyup="fetchData">
-        <div v-if="search_term" class="search_box">
-          <span v-if="loading">Loading...</span>
-          <div v-if="no_results">
+        <div v-if="loading || no_results || players" class="search_box">
+          <loader v-if="loading && !players" class="m-2"></loader>
+          <loader v-if="loading && players" class="search-page__fixed-loader" :showtext="false" :small="true"></loader>
+          <div v-if="no_results" class="m-3">
             No players found
           </div>
           <ul>
@@ -97,11 +99,11 @@
 
     <script type="text/x-template" id="path-page-template">
       <div class="path-page">
-        <div v-if="loading" class="loading">
-          Loading...
-        </div>
 
         <div class="text-content">
+
+          <loader v-if="loading"></loader>
+
           <div v-if="error" class="path-page__text-content">
             <div class="text-content__title">Hum, this is awkward.</div>
             <div class="text-content__subtitle">My thing doesn't seem to work.</div>
@@ -266,6 +268,13 @@
             This is a website about a <a href="https://www.nintendo.com/" target='_blank'>Nintendo Co. Ltd</a> game. The visuals presented on this website come from the game and thus are Nintendo intellectual property.
           </div>
         </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="loader-template">
+      <div class="loader">
+        <div v-if="showtext" class="loader__text">Loading...</div>
+        <div :class="'loader__outer' + (small ? ' --small' : '')"><div :class="'loader__inner' + (small ? ' --small' : '')"></div></div>
       </div>
     </script>
 

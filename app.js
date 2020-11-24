@@ -26,14 +26,17 @@ const SearchPage = Vue.component('search-page', {
             if (!response.ok) {
               const error = data
               return Promise.reject(error)
-            } else {
-              this.players = data
-              if (this.players.length == 0) {
+            } else {      
+              if (data.length == 0) {
                 this.no_results = true
+                this.players = null
+              } else {
+                this.players = data
               }
             }
           })
           .catch(error => {
+            this.loading = false
             this.error = error.toString()
             console.error("There was an error!", error);
           });
@@ -95,6 +98,7 @@ const PathPage = Vue.component('path-page', {
           }
         })
         .catch(error => {
+          this.loading = false
           this.error = error.toString()
           console.error("There was an error!", error);
         });
@@ -148,6 +152,20 @@ const AboutPage = Vue.component('about-page', {
 
 const CreditsPage = Vue.component('credits-page', {
   template: '#credits-page-template'
+})
+
+const Loader = Vue.component('loader', {
+  props: {
+    showtext: {
+      type: Boolean,
+      default: true
+    },
+    small: {
+      type: Boolean,
+      default: false
+    }
+  },
+  template: '#loader-template'
 })
 
 const router = new VueRouter({

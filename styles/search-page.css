@@ -81,6 +81,13 @@
   border-radius: 20px;
   margin: 15px 0px;
   border: 1px solid grey;
+  position: relative;
+}
+
+.search-page__fixed-loader {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 a.player-result {
