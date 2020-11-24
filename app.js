@@ -26,7 +26,7 @@ const SearchPage = Vue.component('search-page', {
             if (!response.ok) {
               const error = data
               return Promise.reject(error)
-            } else {      
+            } else {
               if (data.length == 0) {
                 this.no_results = true
                 this.players = null
@@ -46,7 +46,10 @@ const SearchPage = Vue.component('search-page', {
       }
     }, 150)
   },
-  template: '#search-page-template'
+  template: '#search-page-template',
+  mounted ()  {
+    this.$refs.input.focus();
+  }
 })
 
 const PathPage = Vue.component('path-page', {

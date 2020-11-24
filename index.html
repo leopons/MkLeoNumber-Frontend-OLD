@@ -62,7 +62,7 @@
         <img class="search-page__example" src="img/example1.png"></img>
         <p>Or maybe <b>you</b> beat <b>someone</b> who've beaten <b>someone</b> who've beaten <b>MkLeo</b>&nbsp;?</p>
         <img class="search-page__example" src="img/example2.png"></img>
-        <input placeholder="Search for your player tag" class="search-page__input" v-model="search_term" @keyup="fetchData">
+        <input placeholder="Search for your player tag" class="search-page__input" v-model="search_term" @keyup="fetchData" ref="input">
         <div v-if="loading || no_results || players" class="search_box">
           <loader v-if="loading && !players" class="m-2"></loader>
           <loader v-if="loading && players" class="search-page__fixed-loader" :showtext="false" :small="true"></loader>
