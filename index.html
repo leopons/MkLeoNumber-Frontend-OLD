@@ -28,7 +28,7 @@
             <router-link to="/">Home</router-link>
             <router-link to="/path/1554284">Uncalin</router-link>
             <router-link to="/path/1554">404</router-link>
-            <router-link to="/">Info</router-link>
+            <router-link to="/about">About</router-link>
           </header>
 
           <div class="content-container">
@@ -37,14 +37,14 @@
 
           <footer>
             <div class='footer__line'>
-              <router-link to="/">The Upset Distance</router-link> -
-              <router-link to="/">Credits</router-link> -
-              <router-link to="/">Github</router-link>
+              <router-link to="/about">What is this ?</router-link> -
+              <router-link to="/credits">Credits</router-link> -
+              <a href="https://github.com/leopons/smash-upset-distance__backend" target='_blank'>Github</a>
               <span class="d-none d-md-inline"> - </span>
-              <router-link to="/" class="d-none d-md-inline">Made with love by @UnCalinSSB</router-link>
+              <a href="https://twitter.com/UnCalinSSB" target='_blank' class="d-none d-md-inline">Made with love by @UnCalinSSB</a>
             </div>
             <div class='footer__line d-md-none'>
-              <router-link to="/">Made with love by @UnCalinSSB</router-link>
+              <a href="https://twitter.com/UnCalinSSB" target='_blank'>Made with love by @UnCalinSSB</a>
             </div>
           </footer>
         </div>
@@ -85,9 +85,11 @@
           <div v-if="error" class="text-content">
             <div class="text-content__title">Hum, this is awkward.</div>
             <div class="text-content__subtitle">My thing doesn't seem to work.</div>
-            <div class="text-content__text mt-3">Check your internet connection and try to reload the page.</div>
-            <div class="text-content__text">But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>&#8288;.</div>
-            <div class="text-content__text mt-2"><i>(I might be able to do something about it.)</i></div>
+            <div class="text-content__text mt-3">
+              Check your internet connection and try to reload the page.
+              <br /> But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>&#8288;.
+            </div>
+            <div class="text-content__text"><i>(I might be able to do something about it.)</i></div>
           </div>
         <div>
       </div>
@@ -100,32 +102,38 @@
         </div>
 
         <div class="text-content">
-          <div v-if="error">
+          <div v-if="error" class="path-page__text-content">
             <div class="text-content__title">Hum, this is awkward.</div>
             <div class="text-content__subtitle">My thing doesn't seem to work.</div>
-            <div class="text-content__text mt-3">Check your internet connection and try to reload the page.</div>
-            <div class="text-content__text">But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>&#8288;.</div>
-            <div class="text-content__text mt-2"><i>(I might be able to do something about it.)</i></div>
+            <div class="text-content__text mt-3">
+              Check your internet connection and try to reload the page.
+              <br /> But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>&#8288;.
+            </div>
+            <div class="text-content__text"><i>(I might be able to do something about it.)</i></div>
             <router-link to="/" class="text-content__cta">Go back to home</router-link>
           </div>
 
-          <div v-if="not_found">
+          <div v-if="not_found" class="path-page__text-content">
             <div class="text-content__title">Hum, this is awkward.</div>
             <div class="text-content__subtitle">I can't find your player id in my database.</div>
-            <div class="text-content__text mt-3">If you came here with a direct link, please double check it's valid.</div>
-            <div class="text-content__text">Otherwise, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>.</div>
-            <div class="text-content__text mt-2"><i>(I might be able to do something about it.)</i></div>
+            <div class="text-content__text mt-3">
+              If you came here with a direct link, please double check it's valid.
+              <br /> Otherwise, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>.
+            </div>
+            <div class="text-content__text"><i>(I might be able to do something about it.)</i></div>
             <router-link to="/" class="text-content__cta">Go back to home</router-link>
           </div>
 
-          <div v-if="no_path">
+          <div v-if="no_path" class="path-page__text-content">
             <div class="text-content__title">I'm sorry, there isn't any path that leads from you to MkLeo&nbsp;:&#8288;(</div>
-            <div class="text-content__text">Try to play more registered sets by attending tournaments on <a href="https://smash.gg" target='_blank'>smash.gg</a> for example&nbsp;!</div>
-            <div class="text-content__text">If you succed in outperforming someone just one time, come back here, it should be enough&nbsp;:)</div>
+            <div class="text-content__text">
+              Try to play more registered sets by attending tournaments on <a href="https://smash.gg" target='_blank'>smash.gg</a> for example&nbsp;!
+              <br /> If you succed in outperforming someone just one time, come back here, it should be enough&nbsp;:)
+            </div>
             <router-link to="/" class="text-content__cta">Go back to home</router-link>
           </div>
 
-          <div v-if="path">
+          <div v-if="path" class="path-page__text-content">
             <div class="text-content__title">You are {{ path[0].node_depth }} wins away from MkLeo&nbsp;!</div>
             <div class="text-content__subtitle">Check your upset path below.</div>
           </div>
@@ -205,6 +213,58 @@
           <a :href="'https://twitter.com/' + twittertag" target="_blank">
             @{{ twittertag }}
           </a>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="about-page-template">
+      <div class="about-page">
+        <div class="text-content --left">
+          <div class="text-content__title">What is this&nbsp;?</div>
+
+          <div class="text-content__text mt-3">This web app goal is to allow any <b>Super Smash Bros. Ultimate</b> competitive player to calculate what I call his <i><b>upset distance</b></i> to the best player in the world at this day, MkLeo.</div>
+          <div class="text-content__text">This is a personal non-profit project made on my free time. I really intend to spend more time on building cool tools for the smash community, so don't hesitate to <a href="https://twitter.com/UnCalinSSB" target='_blank'>follow me on twitter</a> to keep you informed about my new projects (I really am not spammy, I promise). You can make suggestions for new tools too.</div>
+
+          <div class="text-content__subtitle mt-3">The Upset Distance</div>
+          <div class="text-content__text">What do I mean by that ? Given all the sets that have been played in registered tournaments for this game, your upset distance to MkLeo is the minimal number of wins you need to go from you to him.</div>
+          <div class="text-content__text"><b>Which means&nbsp;:</b></div>
+          <div class="text-content__text">
+            <ul>
+              <li>All the people that have won at least one time against MkLeo on a registered tournament have a distance of 1 from him. For exemple Glutonny have already won against MkLeo, thus he has a distance of 1.</li>
+              <li>All the people that have won at least one time against someone who have beaten MkLeo, have a distance of 2. Said differently, if you have beaten someone at a distance of 1, you are yourself at a distance of 2. For exemple Tag have already won against Glutonny, thus he has a distance of 2.</li>
+              <li>This goes on as many times as needed.</li>
+              <li>Your final distance is your minimal distance, ie the shortest path of wins that leads from you to MkLeo.</li>
+              <li>Some people may not have a score, if there is not any win path that can lead from him to MkLeo.</li>
+            </ul>
+          </div>
+
+          <div class="text-content__subtitle mt-3">Important Disclaimer</div>
+          <div class="text-content__text">I am very aware that <i>"this means nothing"</i>&nbsp;: a player true level can't be determined by this distance, as it is heavily influenced by one time out-performances, or one may even say luck. I just though this was fun. So please don't complain about that.</div>
+
+          <div class="text-content__subtitle mt-3">The Data</div>
+          <div class="text-content__text">I'm using data from <a href="https://smashdata.gg/" target='_blank'>The Player Database</a>&#8288;. Go check it out, it's a really nice website that aggregates and display data about Smash players. They've done a really nice work of reconciliation of player ids from different sources like smash.gg or challonge, there was not point for me in trying to re-do it.</div>
+          <div class="text-content__text">I'm accounting for all the Smash Ultimate sets on the Player Database, excepts for DQs. This means that some Online tournaments are used for the path calculation too. I may change this in the future, or make it an option. If this is important to you, don't hesitate to make yourself heard on twitter.</div>
+
+          <div class="text-content__subtitle mt-3">Suggestions</div>
+          <div class="text-content__text">As already said above, if you have any ideas or suggestions, please make yourself heard by <a href="https://twitter.com/UnCalinSSB" target='_blank'>taging me on Twitter</a>&#8288;. You can also private message me, but i'm not gonna lie&nbsp;: I'll be more easily convinced if I can see that people share your opinion.</div>
+          <div class="text-content__text">If you witness any bugs in the app, same thing, you can tell me on twitter. If you prefer you can also raise an issue on <a href="https://github.com/leopons/smash-upset-distance__backend" target='_blank'>the public Github repository</a>&#8288;.</div>
+
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="credits-page-template">
+      <div class="about-page">
+        <div class="text-content --left">
+          <div class="text-content__title">Credits</div>
+          <div class="text-content__subtitle mt-3">The Player Database</div>
+          <div class="text-content__text">
+            As explained in the <router-link to="/about">About</router-link> page, this website relies on <a href="https://smashdata.gg/" target='_blank'>The Player Database</a> data. Huge thanks to them, as it saved me precious time collecting the data from platforms like smash.gg or challonge. Please check it out, it's a really nice website that aggregates and display data about Smash players.
+          </div>
+          <div class="text-content__subtitle mt-3">Nintendo</div>
+          <div class="text-content__text">
+            This is a website about a <a href="https://www.nintendo.com/" target='_blank'>Nintendo Co. Ltd</a> game. The visuals presented on this website come from the game and thus are Nintendo intellectual property.
+          </div>
         </div>
       </div>
     </script>

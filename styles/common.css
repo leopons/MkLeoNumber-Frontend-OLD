@@ -192,10 +192,8 @@ footer {
   font-size: 0.9em;
 }
 
-.text-content > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.text-content.--left {
+  text-align: left;
 }
 
 .text-content__title {
@@ -213,6 +211,13 @@ footer {
 .text-content__text {
   font-size: 1em;
   font-weight: 200;
+  margin-top: 10px;
+}
+
+.text-content__text ul {
+  margin-left: 25px;
+  font-size: 0.9em;
+  list-style-type: disc;
 }
 
 a.text-content__cta {

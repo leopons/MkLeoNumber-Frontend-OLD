@@ -142,11 +142,20 @@ const PlayerBox = Vue.component('player-box', {
   template: '#player-box-template'
 })
 
+const AboutPage = Vue.component('about-page', {
+  template: '#about-page-template'
+})
+
+const CreditsPage = Vue.component('credits-page', {
+  template: '#credits-page-template'
+})
 
 const router = new VueRouter({
   routes: [
     { path: '/', component: SearchPage },
-    { path: '/path/:id', component: PathPage }
+    { path: '/path/:id', component: PathPage },
+    { path: '/about', component: AboutPage },
+    { path: '/credits', component: CreditsPage },
   ]
 })
 
