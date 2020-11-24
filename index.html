@@ -95,16 +95,36 @@
           Loading...
         </div>
 
-        <div v-if="error" class="error">
-          {{ error }}
-        </div>
+        <div class="text-content">
+          <div v-if="error">
+            <div class="text-content__title">Hum, this is awkward.</div>
+            <div class="text-content__subtitle">My thing doesn't seem to work.</div>
+            <div class="text-content__text mt-3">Check your internet connection and try to reload the page.</div>
+            <div class="text-content__text">But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>.</div>
+            <div class="text-content__text mt-2"><i>(I might be able to do something about it.)</i></div>
+            <router-link to="/" class="text-content__cta">Go back to home</router-link>
+          </div>
 
-        <div v-if="not_found" class="error">
-          Not found !
-        </div>
+          <div v-if="not_found">
+            <div class="text-content__title">Hum, this is awkward.</div>
+            <div class="text-content__subtitle">I can't find your player id in my database.</div>
+            <div class="text-content__text mt-3">If you came here with a direct link, please double check it's valid.</div>
+            <div class="text-content__text">Otherwise, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>.</div>
+            <div class="text-content__text mt-2"><i>(I might be able to do something about it.)</i></div>
+            <router-link to="/" class="text-content__cta">Go back to home</router-link>
+          </div>
 
-        <div v-if="no_path" class="error">
-          No Path !
+          <div v-if="no_path">
+            <div class="text-content__title">I'm sorry, there isn't any path that leads from you to MkLeo :(</div>
+            <div class="text-content__text">Try to play more registered sets by attending tournaments on <a href="https://smash.gg" target='_blank'>smash.gg</a> for example&nbsp;!</div>
+            <div class="text-content__text">If you succed in outperforming someone just one time, come back here, it should be enough :)</div>
+            <router-link to="/" class="text-content__cta">Go back to home</router-link>
+          </div>
+
+          <div v-if="path">
+            <div class="text-content__title">You are {{ path[0].node_depth }} wins away from MkLeo&nbsp;!</div>
+            <div class="text-content__subtitle">Check your upset path below.</div>
+          </div>
         </div>
 
         <div v-if="path" class="upset-path">
