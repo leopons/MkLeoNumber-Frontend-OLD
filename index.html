@@ -148,6 +148,7 @@
             <div class="text-content__text">
               You are yourself, so I guess you are 0 wins away from yourself&nbsp;?
             </div>
+            <router-link to="/" class="text-content__cta">Go back to home</router-link>
           </div>
         </div>
 
@@ -212,6 +213,11 @@
             </li>
           </ul>
           <div class="upset-path__side-column"></div>
+        </div>
+        <div v-if="path" class="path-page__text-content">
+          <div class="text-content">
+            <router-link to="/" class="text-content__cta d-block">Go back to home</router-link>
+          </div>
         </div>
       </div>
     </script>
