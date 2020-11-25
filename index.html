@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      Smash Upset Distance
+    </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href='styles/common.css' rel='stylesheet' type='text/css'>
+    <link href='styles/search-page.css' rel='stylesheet' type='text/css'>
+    <link href='styles/path-page.css' rel='stylesheet' type='text/css'>
+    <link href='styles/loader.css' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/lodash@4.16.0"></script>
+  </head>
+
+  <body>
+    <div class="main-container">
+      <div class="background-col">
+        <img src="img/background-left.jpg"></img>
+      </div>
+      <div class="main-col">
+        <div id="app">
+          <header>
+            <router-link to="/">Home</router-link>
+            <router-link to="/about">About</router-link>
+          </header>
+
+          <div class="content-container">
+            <router-view></router-view>
+          </div>
+
+          <footer>
+            <div class='footer__line'>
+              <router-link to="/about">What is this ?</router-link> -
+              <router-link to="/credits">Credits</router-link> -
+              <a href="https://github.com/leopons/smash-upset-distance__backend" target='_blank'>Github</a>
+              <span class="d-none d-md-inline"> - </span>
+              <a href="https://twitter.com/UnCalinSSB" target='_blank' class="d-none d-md-inline">Made with love by @UnCalinSSB</a>
+            </div>
+            <div class='footer__line d-md-none'>
+              <a href="https://twitter.com/UnCalinSSB" target='_blank'>Made with love by @UnCalinSSB</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+      <div class="background-col">
+        <img src="img/background-right.jpg"></img>
+      </div>
+    </div>
+
+    <script type="text/x-template" id="search-page-template">
+      <div class="search-page">
+        <h2>Find your shortest win path to MkLeo&nbsp;!</h2>
+        <p>Have <b>you</b> beaten <b>someone</b> who has beaten <b>MkLeo</b>&nbsp;?</p>
+        <img class="search-page__example" src="img/example1.png"></img>
+        <p>Or maybe <b>you</b> have beaten <b>someone</b> who has beaten <b>someone</b> who has beaten <b>MkLeo</b>&nbsp;?</p>
+        <img class="search-page__example" src="img/example2.png"></img>
+        <input placeholder="Search for your player tag" class="search-page__input" v-model="search_term" @keyup="fetchData" ref="input">
+        <div v-if="loading || no_results || players" class="search_box">
+          <loader v-if="loading && !players" class="m-2"></loader>
+          <loader v-if="loading && players" class="search-page__fixed-loader" :showtext="false" :small="true"></loader>
+          <div v-if="no_results" class="m-3">
+            No players found
+          </div>
+          <ul>
+            <li v-for="player in players" :key="player.id">
+              <router-link :to="'/path/' + player.id" class="player-result">
+                <div class="player-result__box">
+                  <div class="player-result__tag-container">
+                    <b class="player-result__tag">{{ player.tag }}</b>
+                    <img v-if="player.main_character" class="player-result__main-char" :src="'https://smashdata.gg/static/assets/stock_icons/ultimate/' + player.main_character + '_0.png'"></img>
+                  </div>
+                  <div class="player-result__last-tournament">
+                    Last tournament : <span v-if="player.last_tournament"> {{ player.last_tournament.name }} </span><span v-else>Unknown</span>
+                  </div>
+              </div>
+              </router-link>
+            </li>
+          </ul>
+          <div v-if="error" class="text-content">
+            <div class="text-content__title">Hum, this is awkward.</div>
+            <div class="text-content__subtitle">My thing doesn't seem to work.</div>
+            <div class="text-content__text mt-3">
+              Check your internet connection and try to reload the page.
+              <br /> But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>&#8288;.
+            </div>
+            <div class="text-content__text"><i>(I might be able to do something about it.)</i></div>
+          </div>
+        <div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="path-page-template">
+      <div class="path-page">
+
+        <div class="text-content">
+
+          <loader v-if="loading"></loader>
+
+          <div v-if="error" class="path-page__text-content">
+            <div class="text-content__title">Hum, this is awkward.</div>
+            <div class="text-content__subtitle">My thing doesn't seem to work.</div>
+            <div class="text-content__text mt-3">
+              Check your internet connection and try to reload the page.
+              <br /> But honestly, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>&#8288;.
+            </div>
+            <div class="text-content__text"><i>(I might be able to do something about it.)</i></div>
+            <router-link to="/" class="text-content__cta">Go back to home</router-link>
+          </div>
+
+          <div v-if="not_found" class="path-page__text-content">
+            <div class="text-content__title">Hum, this is awkward.</div>
+            <div class="text-content__subtitle">I can't find your player id in my database.</div>
+            <div class="text-content__text mt-3">
+              If you came here with a direct link, please double check it's valid.
+              <br /> Otherwise, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>.
+            </div>
+            <div class="text-content__text"><i>(I might be able to do something about it.)</i></div>
+            <router-link to="/" class="text-content__cta">Go back to home</router-link>
+          </div>
+
+          <div v-if="no_path" class="path-page__text-content">
+            <div class="text-content__title">I'm sorry, there isn't any path that leads from you to MkLeo...</div>
+            <img class="sad-kirby" src="img/kirby.png"></img>
+            <div class="text-content__text">
+              Try to play more registered sets by attending tournaments on <a href="https://smash.gg" target='_blank'>smash.gg</a> for example&nbsp;!
+              <br /> If you succeed in beating someone better than you, come back here, it should be enough&nbsp;:)
+            </div>
+            <router-link to="/" class="text-content__cta">Go back to home</router-link>
+          </div>
+
+          <div v-if="path" class="path-page__text-content">
+            <div class="text-content__title">You are {{ path[0].node_depth }} win{{ (path[0].node_depth == 1) ? '' : 's'}} away from MkLeo&nbsp;!</div>
+            <div v-if="path[0].node_depth == 1" class="text-content__subtitle">Don't act like you didn't know.</div>
+            <div v-if="(path[0].node_depth >= 2) && (path[0].node_depth < 4)" class="text-content__subtitle">Damn, that's impressive.</div>
+            <div v-if="(path[0].node_depth >= 4) && (path[0].node_depth < 7)" class="text-content__subtitle">Hey, that's actually not so far, don't you think&nbsp;?</div>
+            <div v-if="(path[0].node_depth >= 7)" class="text-content__subtitle">And I'm sure you can get closer&nbsp;!<br />Come back in a few good wins&nbsp;:)</div>
+            <div class="text-content__text">Check your upset path below.</div>
+          </div>
+
+          <div v-if="ismkleo" class="path-page__text-content">
+            <div class="text-content__title">Hey Leo&nbsp;!</div>
+            <div class="text-content__subtitle">Thanks for checking my app.</div>
+            <div class="text-content__text">
+              You are yourself, so I guess you are 0 wins away from yourself&nbsp;?
+            </div>
+            <router-link to="/" class="text-content__cta">Go back to home</router-link>
+          </div>
+        </div>
+
+        <div v-if="path" class="upset-path">
+          <div class="upset-path__side-column --left"></div>
+          <ul class="upset-path__path-list">
+            <li v-for="node in path">
+              <div class="player-row">
+                <div :class="'player-row__side-column --depth-' + node.node_depth">
+                  <div> {{ node.node_depth }} </div>
+                  <div class="player-row__side-line"></div>
+                </div>
+                <player-box :id="node.upset.winner.id" :tag="node.upset.winner.tag" :maincharacter="node.upset.winner.main_character"></player-box>
+                <div :class="'player-row__side-column --depth-' + node.node_depth">
+                  <div class="player-row__side-line"></div>
+                </div>
+              </div>
+              <div class="path-list__pipe">|</div>
+              <div class="tournament-box">
+                <div class="tournament-box__name">{{ node.upset.tournament.name }}</div>
+                <div class="tournament-box__date">{{ node.upset.tournament.start_date }}</div>
+                <div class="tournament-box__result">
+                  <span class="tournament-box__result-half --left">
+                    <li v-for="character in node.upset.winner_characters">
+                      <img class="tournament-box__character" :src="'https://smashdata.gg/static/assets/stock_icons/ultimate/' + character + '_0.png'"></img>
+                    </li>
+                    <span class="tournament-box__player-tag">{{ node.upset.winner.tag }}</span> -
+                    <span class="tournament-box__player-score --winner">{{ node.upset.winner_score }}</span>
+                  </span>
+                  -
+                  <span class="tournament-box__result-half --right">
+                    <span class="tournament-box__player-score --loser">{{ node.upset.loser_score }}</span> -
+                    <span class="tournament-box__player-tag">{{ node.upset.loser.tag }}</span>
+                    <li v-for="character in node.upset.loser_characters">
+                      <img class="tournament-box__character" :src="'https://smashdata.gg/static/assets/stock_icons/ultimate/' + character + '_0.png'"></img>
+                    </li>
+                  </span>
+                </div>
+              </div>
+              <div class="path-list__pipe">|</div>
+            </li>
+            <li class="path-list__mkleo">
+              <div class="player-row">
+                <div class="player-row__side-column">
+                  <div class="player-row__side-line"></div>
+                </div>
+                <div class="player-box">
+                  <div class="player-box__name">
+                    <b>MkLeo</b>
+                  </div>
+                  <div class="player-box__twittertag">
+                    <a href="https://twitter.com/Mkleosb" target="_blank">
+                      @Mkleosb
+                    </a>
+                  </div>
+                </div>
+                <div class="player-row__side-column">
+                  <div class="player-row__side-line"></div>
+                </div>
+                <img class="path-list__mkleo-joker" src="img/joker.png"></img>
+              </div>
+            </li>
+          </ul>
+          <div class="upset-path__side-column"></div>
+        </div>
+        <div v-if="path" class="path-page__text-content">
+          <div class="text-content">
+            <router-link to="/" class="text-content__cta d-block">Go back to home</router-link>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="player-box-template">
+      <div class="player-box">
+        <div class="player-box__name">
+          <b>{{ tag }}</b><img v-if="maincharacter" :src="'https://smashdata.gg/static/assets/stock_icons/ultimate/' + maincharacter + '_0.png'"></img>
+        </div>
+        <div v-if="twittertag" class="player-box__twittertag">
+          <a :href="'https://twitter.com/' + twittertag" target="_blank">
+            @{{ twittertag }}
+          </a>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="about-page-template">
+      <div class="about-page">
+        <div class="text-content --left">
+          <div class="text-content__title">What is this&nbsp;?</div>
+
+          <div class="text-content__text mt-3">This web app goal is to allow any <b>Super Smash Bros. Ultimate</b> competitive player to calculate what I call his <i><b>upset distance</b></i> to the best player in the world at this day, MkLeo.</div>
+          <div class="text-content__text">This is a personal non-profit project made on my free time. I really intend to spend more time on building cool tools for the smash community, so don't hesitate to <a href="https://twitter.com/UnCalinSSB" target='_blank'>follow me on twitter</a> to keep you informed about my new projects (No worries, I tweet very sparingly, and only about smash). You can make suggestions for new tools too.</div>
+
+          <div class="text-content__subtitle mt-3">The Upset Distance</div>
+          <div class="text-content__text">What do I mean by that ? Given all the sets that have been played in registered tournaments for this game, your upset distance to MkLeo is the minimal number of wins you need to go from you to him.</div>
+          <div class="text-content__text"><b>Which means&nbsp;:</b></div>
+          <div class="text-content__text">
+            <ul>
+              <li>All the people that have won at least one time against MkLeo on a registered tournament have a distance of 1 from him. For exemple Glutonny has won against MkLeo at least one time, thus he has a distance of 1.</li>
+              <li>All the people that have won at least one time against someone who has beaten MkLeo, have a distance of 2. Said differently, if you have beaten someone who is at a distance of 1 from MkLeo, you are yourself at a distance of 2. For exemple Raflow has won one time against Glutonny, thus he has a distance of 2.</li>
+              <li>This goes on as many times as needed.</li>
+              <li>Your final distance is your minimal distance, which means the shortest path of wins that lead from you to MkLeo.</li>
+              <li>Some people may not have a score, if there is not any win path that can lead to MkLeo. This can happen for example with a player that has never won against anyone.</li>
+            </ul>
+          </div>
+
+          <div class="text-content__subtitle mt-3">Important Disclaimer</div>
+          <div class="text-content__text">I am very aware that <i>"this means nothing"</i>&nbsp;: a player true level can't be determined by this distance, as it is heavily influenced by one time out-performances, or one may even say luck. I just though this was fun. So please don't complain about that.</div>
+
+          <div class="text-content__subtitle mt-3">The Data</div>
+          <div class="text-content__text">I'm using data from <a href="https://smashdata.gg/" target='_blank'>The Player Database</a>&#8288;. Go check it out, it's a really nice website that aggregates and displays data about Smash players. They've done a really nice work of reconciliation of player ids from different sources like smash.gg or challonge, there was not point for me in trying to re-do it.</div>
+          <div class="text-content__text">I'm accounting for all the Smash Ultimate sets on the Player Database, excepts for DQs. This means that some Online tournaments are used for the path calculation too. I may change this in the future, or make it an option. If this is important to you, don't hesitate to make yourself heard on twitter.</div>
+
+          <div class="text-content__subtitle mt-3">Suggestions</div>
+          <div class="text-content__text">As already said above, if you have any ideas or suggestions, please make yourself heard by <a href="https://twitter.com/UnCalinSSB" target='_blank'>taging me on Twitter</a>&#8288;. You can also private message me, but i'm not gonna lie&nbsp;: I'll be more easily convinced if I can see that people share your opinion.</div>
+          <div class="text-content__text">If you witness any bugs in the app, same thing, you can tell me on twitter. If you prefer you can also raise an issue on <a href="https://github.com/leopons/smash-upset-distance__backend" target='_blank'>the public Github repository</a>&#8288;.</div>
+
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="credits-page-template">
+      <div class="about-page">
+        <div class="text-content --left">
+          <div class="text-content__title">Credits</div>
+          <div class="text-content__subtitle mt-3">The Player Database</div>
+          <div class="text-content__text">
+            As explained in the <router-link to="/about">About</router-link> page, this website relies on <a href="https://smashdata.gg/" target='_blank'>The Player Database</a> data. Huge thanks to them, as it saved me precious time collecting the data from platforms like smash.gg or challonge. Please check it out, it's a really nice website that aggregates and display data about Smash players.
+          </div>
+          <div class="text-content__subtitle mt-3">Nintendo</div>
+          <div class="text-content__text">
+            This is a website about a <a href="https://www.nintendo.com/" target='_blank'>Nintendo Co. Ltd</a> game. The visuals presented on this website come from the game and thus are Nintendo intellectual property.
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="loader-template">
+      <div class="loader">
+        <div v-if="showtext" class="loader__text">Loading...</div>
+        <div :class="'loader__outer' + (small ? ' --small' : '')"><div :class="'loader__inner' + (small ? ' --small' : '')"></div></div>
+      </div>
+    </script>
+
+    <script src="app.js"></script>
+  </body>
+</html>
