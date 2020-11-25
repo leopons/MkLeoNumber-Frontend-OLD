@@ -158,11 +158,13 @@ const PlayerBox = Vue.component('player-box', {
 })
 
 const AboutPage = Vue.component('about-page', {
-  template: '#about-page-template'
+  template: '#about-page-template',
+  created () {document.getElementById('app').scrollTop = 0;}
 })
 
 const CreditsPage = Vue.component('credits-page', {
-  template: '#credits-page-template'
+  template: '#credits-page-template',
+  created () {document.getElementById('app').scrollTop = 0;}
 })
 
 const Loader = Vue.component('loader', {
@@ -194,5 +196,10 @@ const app = new Vue({
   data: {
     product: 'Socks',
     description: 'A pair of warm fuzzy socks'
-  }
+  },
+  watch: {
+    $route (to, from){
+      window.scrollTo(0,0);
+    },
+  },
 }).$mount('#app')
