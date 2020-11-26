@@ -1,5 +1,14 @@
 const BACKEND_ROOT = 'https://smash-upset-distance.ew.r.appspot.com/'
 
+// Manually set vh for iOS devices
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+// We listen to the resize event to update vh
+window.addEventListener('resize', _.throttle(function() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}, 100));
+
 const SearchPage = Vue.component('search-page', {
   data () {
     return {

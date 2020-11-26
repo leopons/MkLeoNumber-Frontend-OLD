@@ -23,6 +23,7 @@ a:hover {
 
 .main-container {
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   display: flex;
 }
 
@@ -63,6 +64,7 @@ header {
 .content-container {
   /* 100vh minus Footer height */
   min-height: calc(100vh - 50px);
+  min-height: calc(var(--vh, 1vh) * 100 - 50px);
   /* Header height */
   padding-top: 40px;
 }
@@ -101,6 +103,7 @@ footer {
   .content-container {
     /* 100vh minus Footer height */
     min-height: calc(100vh - 40px);
+    min-height: calc(var(--vh, 1vh) * 100 - 40px);
   }
 
   footer {
