@@ -1,5 +1,14 @@
 const BACKEND_ROOT = 'https://smash-upset-distance.ew.r.appspot.com/'
 
+// Manually set vh for iOS devices
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+// We listen to the resize event to update vh
+window.addEventListener('resize', _.throttle(function() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}, 100));
+
 const SearchPage = Vue.component('search-page', {
   data () {
     return {
@@ -158,11 +167,13 @@ const PlayerBox = Vue.component('player-box', {
 })
 
 const AboutPage = Vue.component('about-page', {
-  template: '#about-page-template'
+  template: '#about-page-template',
+  created () {document.getElementById('app').scrollTop = 0;}
 })
 
 const CreditsPage = Vue.component('credits-page', {
-  template: '#credits-page-template'
+  template: '#credits-page-template',
+  created () {document.getElementById('app').scrollTop = 0;}
 })
 
 const Loader = Vue.component('loader', {
@@ -194,5 +205,10 @@ const app = new Vue({
   data: {
     product: 'Socks',
     description: 'A pair of warm fuzzy socks'
-  }
+  },
+  watch: {
+    $route (to, from){
+      window.scrollTo(0,0);
+    },
+  },
 }).$mount('#app')
