@@ -176,6 +176,11 @@ const CreditsPage = Vue.component('credits-page', {
   created () {document.getElementById('app').scrollTop = 0;}
 })
 
+const NotFoundComponent = Vue.component('notfound-page', {
+  template: '#notfound-page-template',
+  created () {document.getElementById('app').scrollTop = 0;}
+})
+
 const Loader = Vue.component('loader', {
   props: {
     showtext: {
@@ -191,11 +196,13 @@ const Loader = Vue.component('loader', {
 })
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     { path: '/', component: SearchPage },
     { path: '/path/:id', component: PathPage },
     { path: '/about', component: AboutPage },
     { path: '/credits', component: CreditsPage },
+    { path: '*', component: NotFoundComponent }
   ]
 })
 

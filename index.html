@@ -236,7 +236,7 @@
     </script>
 
     <script type="text/x-template" id="about-page-template">
-      <div class="about-page">
+      <div>
         <div class="text-content --left">
           <div class="text-content__title">What is this&nbsp;?</div>
 
@@ -272,7 +272,7 @@
     </script>
 
     <script type="text/x-template" id="credits-page-template">
-      <div class="about-page">
+      <div>
         <div class="text-content --left">
           <div class="text-content__title">Credits</div>
           <div class="text-content__subtitle mt-3">The Player Database</div>
@@ -283,6 +283,21 @@
           <div class="text-content__text">
             This is a website about a <a href="https://www.nintendo.com/" target='_blank'>Nintendo Co. Ltd</a> game. The visuals presented on this website come from the game and thus are Nintendo intellectual property.
           </div>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-template" id="notfound-page-template">
+      <div>
+        <div class="text-content">
+          <div class="text-content__title">Hum, this is awkward.</div>
+          <div class="text-content__subtitle">The infamous 404 : I can't find what your asking for.</div>
+          <div class="text-content__text mt-3">
+            If you came here with a direct link, please double check it's valid.
+            <br /> Otherwise, I probably just messed something up. Please <a href="https://twitter.com/UnCalinSSB" target='_blank'>insult me on twitter</a>.
+          </div>
+          <div class="text-content__text"><i>(I might be able to do something about it.)</i></div>
+          <router-link to="/" class="text-content__cta d-block mx-auto mt-4">Go back to home</router-link>
         </div>
       </div>
     </script>
