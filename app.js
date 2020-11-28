@@ -68,7 +68,8 @@ const PathPage = Vue.component('path-page', {
       path: null,
       error: null,
       not_found: false,
-      no_path: false
+      no_path: false,
+      share_message: null,
     }
   },
   created () {
@@ -82,13 +83,14 @@ const PathPage = Vue.component('path-page', {
   },
   methods: {
     fetchData () {
+      this.error = this.path = null
+      this.not_found = false
+      this.no_path = false
+      this.share_message = null
       if (this.ismkleo) {
         this.loading = false
       } else {
-        this.error = this.path = null
-        this.not_found = false
         this.loading = true
-        this.no_path = false
         const fetchedId = this.$route.params.id
 
         // GET request using fetch with error handling
@@ -118,11 +120,46 @@ const PathPage = Vue.component('path-page', {
             console.error("There was an error!", error);
           });
       }
-    }
+    },
+    copyurl () {
+      let urlToCopy = document.querySelector('#url-to-copy')
+      urlToCopy.setAttribute('type', 'text')
+      urlToCopy.select()
+      try {
+        document.execCommand('copy');
+        this.share_message = 'Link copied to clipboard !';
+      } catch (err) {
+        this.share_message = 'Weird, unable to copy.';
+      }
+      /* unselect the range */
+      urlToCopy.setAttribute('type', 'hidden')
+      window.getSelection().removeAllRanges()
+    },
   },
   computed: {
     ismkleo () {
       return (this.$route.params.id == 222927)
+    },
+    upsetdistance () {
+      return this.ismkleo ? 0 : this.path[0].node_depth
+    },
+    currenturl () {
+      return window.location.href;
+    },
+    twitterurl () {
+      let message = "I'm " + this.upsetdistance + " upset" + (this.upsetdistance <= 1 ? '' : 's') + " away from MkLeo ! Here is my win path : " + this.winpathtext + ". What about you ?"
+      return "http://twitter.com/share?text=" + message + "&url=" + this.currenturl;
+    },
+    facebookurl () {
+      return "https://www.facebook.com/sharer/sharer.php?u=" + this.currenturl;
+    },
+    winpathtext () {
+      let rep = ''
+      this.path.forEach((node) => {
+        rep += node.upset.winner.tag + ' > '
+      })
+      rep += 'MkLeo'
+      return rep
     }
   },
   template: '#path-page-template'
