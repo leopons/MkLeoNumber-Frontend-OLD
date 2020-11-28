@@ -214,6 +214,33 @@
   margin-top: 10px;
 }
 
+.path-page__share-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.path-page__share-button {
+  width: 40px;
+  height: 40px;
+  fill: white;
+  margin: 5px;
+  transition: fill 0.2s;
+  cursor: pointer;
+}
+
+.path-page__share-button.--twitter:hover {
+  fill: #08a0e9;
+}
+
+.path-page__share-button.--facebook:hover {
+  fill: #3b5998;
+}
+
+.path-page__share-button.--link:hover {
+  fill: #5db7cd;
+}
+
 @media (min-width: 540px) {
   .path-list__mkleo .player-box {
     padding: 25px 100px 30px 40px;
