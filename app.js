@@ -30,6 +30,8 @@ const SearchPage = Vue.component('search-page', {
         fetch(BACKEND_ROOT + "upsets/players/search/?term=" + fetchedTerm)
           .then(async response => {
             const data = await response.json();
+            // make sure this request is the last one we did, discard otherwise
+            if (this.search_term !== fetchedTerm) return
             this.loading = false
             // check for error response
             if (!response.ok) {
