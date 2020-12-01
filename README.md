@@ -6,6 +6,8 @@ This is the front-end of a web app. The app goal is to allow any Super Smash Bro
 
 Read more about that on [the backend repo](https://github.com/leopons/smash-upset-distance__backend).
 
+This is the prod app : https://upsets.ssbapps.com/
+
 ## Code Structure
 
 This is a fully static frontend using [Vue.js](https://vuejs.org/).
