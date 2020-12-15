@@ -146,6 +146,9 @@ const PathPage = Vue.component('path-page', {
       urlToCopy.setAttribute('type', 'hidden')
       window.getSelection().removeAllRanges()
     },
+    currenturl () {
+      return window.location.href;
+    },
   },
   computed: {
     ismkleo () {
@@ -154,15 +157,12 @@ const PathPage = Vue.component('path-page', {
     upsetdistance () {
       return this.ismkleo ? 0 : this.path[0].node_depth
     },
-    currenturl () {
-      return window.location.href;
-    },
     twitterurl () {
       let message = "My " + (this.offline_only ? "offline " : "") + "MkLeo Number is " + this.upsetdistance + " ! Here is my upset path : " + this.winpathtext + ". What about you ?"
-      return "http://twitter.com/share?text=" + message + "&url=" + this.currenturl;
+      return "http://twitter.com/share?text=" + message + "&url=" + this.currenturl();
     },
     facebookurl () {
-      return "https://www.facebook.com/sharer/sharer.php?u=" + this.currenturl;
+      return "https://www.facebook.com/sharer/sharer.php?u=" + this.currenturl();
     },
     winpathtext () {
       let rep = ''
