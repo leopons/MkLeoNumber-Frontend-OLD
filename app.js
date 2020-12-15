@@ -74,6 +74,7 @@ const PathPage = Vue.component('path-page', {
       share_message: null,
     }
   },
+  props: ['offline_only'],
   created () {
     // fetch the data when the view is created and the data is
     // already being observed
@@ -94,9 +95,9 @@ const PathPage = Vue.component('path-page', {
       } else {
         this.loading = true
         const fetchedId = this.$route.params.id
-
+        const fetch_url = BACKEND_ROOT + "upsets/playerpath/" + fetchedId + (this.offline_only ? '/?offline_only=True' : '')
         // GET request using fetch with error handling
-        fetch(BACKEND_ROOT + "upsets/playerpath/" + fetchedId)
+        fetch(fetch_url)
           .then(async response => {
             const data = await response.json();
             this.loading = false
@@ -109,10 +110,18 @@ const PathPage = Vue.component('path-page', {
               const error = data
               return Promise.reject(error)
             } else {
-              if (data.path_exist){
-                this.path = data.path
+              if ('path_exist' in data) {
+                if (data.path_exist){
+                  if ('path' in data) {
+                    this.path = data.path
+                  } else {
+                    return Promise.reject('Invalid API response')
+                  }
+                } else {
+                  this.no_path = true
+                }
               } else {
-                this.no_path = true
+                return Promise.reject('Invalid API response')
               }
             }
           })
@@ -238,7 +247,8 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', component: SearchPage },
-    { path: '/path/:id', component: PathPage },
+    { path: '/path/:id', component: PathPage, props: { offline_only: false }},
+    { path: '/path/:id/offline', component: PathPage, props: { offline_only: true }},
     { path: '/about', component: AboutPage },
     { path: '/credits', component: CreditsPage },
     { path: '*', component: NotFoundComponent }
