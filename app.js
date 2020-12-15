@@ -158,7 +158,7 @@ const PathPage = Vue.component('path-page', {
       return window.location.href;
     },
     twitterurl () {
-      let message = "My MkLeo Number is " + this.upsetdistance + " ! Here is my upset path : " + this.winpathtext + ". What about you ?"
+      let message = "My " + (this.offline_only ? "offline " : "") + "MkLeo Number is " + this.upsetdistance + " ! Here is my upset path : " + this.winpathtext + ". What about you ?"
       return "http://twitter.com/share?text=" + message + "&url=" + this.currenturl;
     },
     facebookurl () {

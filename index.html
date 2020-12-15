@@ -171,12 +171,12 @@
           </div>
 
           <div v-if="path" class="path-page__text-content">
-            <div class="text-content__title">You are {{ upsetdistance }} upset{{ (upsetdistance == 1) ? '' : 's'}} away from MkLeo&nbsp;!</div>
+            <div class="text-content__title">Your {{ offline_only ? 'offline' : ''}} MkLeo number is {{ upsetdistance }}&nbsp;!</div>
             <div v-if="upsetdistance == 1" class="text-content__subtitle">Don't act like you didn't know.</div>
             <div v-if="(upsetdistance >= 2) && (upsetdistance < 4)" class="text-content__subtitle">Damn, that's impressive.</div>
             <div v-if="(upsetdistance >= 4) && (upsetdistance < 7)" class="text-content__subtitle">Hey, that's actually not so far, don't you think&nbsp;?</div>
             <div v-if="(upsetdistance >= 7)" class="text-content__subtitle">And I'm sure you can get closer&nbsp;!<br />Come back in a few good wins&nbsp;:)</div>
-            <div class="text-content__text">Check your shortest win path below.</div>
+            <div class="text-content__text">Check your shortest upset path below.</div>
           </div>
 
           <div v-if="ismkleo" class="path-page__text-content">
