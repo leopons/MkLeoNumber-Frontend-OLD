@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KEHVQHS1ZX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-KEHVQHS1ZX');
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
@@ -298,7 +307,7 @@
                   	c-1.801,1.813-4.518,2.362-6.883,1.389c-12.807-5.238-26.515-7.919-40.353-7.894h-2.336c-2.58,0.049-4.93-1.476-5.936-3.852
                   	c-1.017-2.37-0.493-5.119,1.326-6.947l66.246-66.181c34.527-34.528,90.508-34.528,125.035,0S498.086,326.921,463.557,361.449z"/>
                 </svg>
-                <input type="hidden" id="url-to-copy" :value="currenturl">
+                <input type="hidden" id="url-to-copy" :value="currenturl()">
               </a>
             </div>
             <div v-if="share_message" class="text-content__text">{{ share_message }}</div>
