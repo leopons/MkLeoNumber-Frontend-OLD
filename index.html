@@ -205,7 +205,18 @@
               </div>
               <div class="path-list__pipe">|</div>
               <div class="tournament-box">
-                <div class="tournament-box__name">{{ node.upset.tournament.name }}</div>
+                <div class="tournament-box__name">
+                  <svg class="tournament-box__name-wifi-icon" v-if="node.upset.tournament.online" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.333 469.333">
+                  <g>
+                  	<path d="M170.667,336.6l64,64l64-64C263.36,301.293,205.973,301.293,170.667,336.6z"/>
+                  	<path d="M85.333,251.267L128,293.933c58.88-58.88,154.453-58.88,213.333,0L384,251.267
+                  		C301.547,168.813,167.787,168.813,85.333,251.267z"/>
+                  	<path d="M0,165.933L42.667,208.6c106.027-106.027,277.973-106.027,384,0l42.667-42.667C339.733,36.333,129.6,36.333,0,165.933z"
+                  		/>
+                  </g>
+                  </svg>
+                  {{ node.upset.tournament.name }}
+                </div>
                 <div class="tournament-box__date">{{ node.upset.tournament.start_date }}</div>
                 <div class="tournament-box__result">
                   <span class="tournament-box__result-half --left">
