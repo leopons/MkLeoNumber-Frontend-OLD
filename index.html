@@ -161,12 +161,13 @@
           </div>
 
           <div v-if="no_path" class="path-page__text-content">
-            <div class="text-content__title">I'm sorry, there isn't any win path that leads from you to MkLeo...</div>
+            <div class="text-content__title">I'm sorry, there isn't any {{ offline_only ? 'offline' : ''}} win path that leads from you to MkLeo...</div>
             <img class="sad-kirby" src="/img/kirby.png"></img>
             <div class="text-content__text">
               Try to play more registered sets by attending tournaments on <a href="https://smash.gg" target='_blank'>smash.gg</a> for example&nbsp;!
               <br /> If you succeed in beating someone better than you, come back here, it should be enough&nbsp;:)
             </div>
+            <router-link v-if="offline_only" :to="'/path/' + $route.params.id">Try including online tournaments.</router-link>
             <router-link to="/" class="text-content__cta">Go back to home</router-link>
           </div>
 
@@ -177,6 +178,8 @@
             <div v-if="(upsetdistance >= 4) && (upsetdistance < 7)" class="text-content__subtitle">Hey, that's actually not so far, don't you think&nbsp;?</div>
             <div v-if="(upsetdistance >= 7)" class="text-content__subtitle">And I'm sure you can get closer&nbsp;!<br />Come back in a few good wins&nbsp;:)</div>
             <div class="text-content__text">Check your shortest upset path below.</div>
+            <router-link v-if="offline_only" :to="'/path/' + $route.params.id" class="text-content__offline-switch">Include online tournaments</router-link>
+            <router-link v-if="!offline_only" :to="'/path/' + $route.params.id + '/offline'" class="text-content__offline-switch">Filter out online tournaments</router-link>
           </div>
 
           <div v-if="ismkleo" class="path-page__text-content">
