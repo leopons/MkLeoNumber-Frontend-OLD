@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-      Smash Upset Distance
+      MkLeo Number Engine
     </title>
 
-    <meta property="og:site_name" content="Smash Upset Distance"/>
-    <meta property="og:title" content="Find out your shortest win path to MkLeo!"/>
+    <meta property="og:site_name" content="MkLeo Number Engine"/>
+    <meta property="og:title" content="Find out your MkLeo number!"/>
     <meta property="og:description" content="Have you beaten someone, who has beaten someone, who has beaten MkLeo ?"/>
     <meta property="og:image" content="https://upsets.ssbapps.com/img/preview.png">
     <meta property="og:type" content="website"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Find out your shortest win path to MkLeo!"/>
+    <meta name="twitter:title" content="Find out your MkLeo number!"/>
     <meta name="twitter:description" content="Have you beaten someone, who has beaten someone, who has beaten MkLeo ?"/>
     <meta name="twitter:image" content="https://upsets.ssbapps.com/img/preview.png">
     <meta name="twitter:site" content="@UnCalinSSB"/>
@@ -88,7 +88,7 @@
 
     <script type="text/x-template" id="search-page-template">
       <div class="search-page">
-        <h2>Find your shortest win path to MkLeo&nbsp;!</h2>
+        <h2>Find your MkLeo number&nbsp;!</h2>
         <p>Have <b>you</b> beaten <b>someone</b> who has beaten <b>MkLeo</b>&nbsp;?</p>
         <img class="search-page__example" src="/img/example1.png"></img>
         <p>Or maybe <b>you</b> have beaten <b>someone</b> who has beaten <b>someone</b> who has beaten <b>MkLeo</b>&nbsp;?</p>
@@ -126,7 +126,7 @@
           </div>
         </div>
         <div class="search-page__last-data-update">
-          Last data update : 13 Nov. 2020
+          Last data update : 03 Dec. 2020
         </div>
       </div>
     </script>
@@ -161,22 +161,25 @@
           </div>
 
           <div v-if="no_path" class="path-page__text-content">
-            <div class="text-content__title">I'm sorry, there isn't any path that leads from you to MkLeo...</div>
+            <div class="text-content__title">I'm sorry, there isn't any {{ offline_only ? 'offline' : ''}} win path that leads from you to MkLeo...</div>
             <img class="sad-kirby" src="/img/kirby.png"></img>
             <div class="text-content__text">
               Try to play more registered sets by attending tournaments on <a href="https://smash.gg" target='_blank'>smash.gg</a> for example&nbsp;!
               <br /> If you succeed in beating someone better than you, come back here, it should be enough&nbsp;:)
             </div>
+            <router-link v-if="offline_only" :to="'/path/' + $route.params.id">Try including online tournaments.</router-link>
             <router-link to="/" class="text-content__cta">Go back to home</router-link>
           </div>
 
           <div v-if="path" class="path-page__text-content">
-            <div class="text-content__title">You are {{ upsetdistance }} win{{ (upsetdistance == 1) ? '' : 's'}} away from MkLeo&nbsp;!</div>
+            <div class="text-content__title">Your {{ offline_only ? 'offline' : ''}} MkLeo number is {{ upsetdistance }}&nbsp;!</div>
             <div v-if="upsetdistance == 1" class="text-content__subtitle">Don't act like you didn't know.</div>
             <div v-if="(upsetdistance >= 2) && (upsetdistance < 4)" class="text-content__subtitle">Damn, that's impressive.</div>
             <div v-if="(upsetdistance >= 4) && (upsetdistance < 7)" class="text-content__subtitle">Hey, that's actually not so far, don't you think&nbsp;?</div>
             <div v-if="(upsetdistance >= 7)" class="text-content__subtitle">And I'm sure you can get closer&nbsp;!<br />Come back in a few good wins&nbsp;:)</div>
-            <div class="text-content__text">Check your upset path below.</div>
+            <div class="text-content__text">Check your shortest upset path below.</div>
+            <router-link v-if="offline_only" :to="'/path/' + $route.params.id" class="text-content__offline-switch">Include online tournaments</router-link>
+            <router-link v-if="!offline_only" :to="'/path/' + $route.params.id + '/offline'" class="text-content__offline-switch">Filter out online tournaments</router-link>
           </div>
 
           <div v-if="ismkleo" class="path-page__text-content">
@@ -205,7 +208,18 @@
               </div>
               <div class="path-list__pipe">|</div>
               <div class="tournament-box">
-                <div class="tournament-box__name">{{ node.upset.tournament.name }}</div>
+                <div class="tournament-box__name">
+                  <svg class="tournament-box__name-wifi-icon" v-if="node.upset.tournament.online" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.333 469.333">
+                  <g>
+                  	<path d="M170.667,336.6l64,64l64-64C263.36,301.293,205.973,301.293,170.667,336.6z"/>
+                  	<path d="M85.333,251.267L128,293.933c58.88-58.88,154.453-58.88,213.333,0L384,251.267
+                  		C301.547,168.813,167.787,168.813,85.333,251.267z"/>
+                  	<path d="M0,165.933L42.667,208.6c106.027-106.027,277.973-106.027,384,0l42.667-42.667C339.733,36.333,129.6,36.333,0,165.933z"
+                  		/>
+                  </g>
+                  </svg>
+                  {{ node.upset.tournament.name }}
+                </div>
                 <div class="tournament-box__date">{{ node.upset.tournament.start_date }}</div>
                 <div class="tournament-box__result">
                   <span class="tournament-box__result-half --left">
@@ -312,7 +326,7 @@
         <div class="text-content --left">
           <div class="text-content__title">What is this&nbsp;?</div>
 
-          <div class="text-content__text mt-3">This web app goal is to allow any <b>Super Smash Bros. Ultimate</b> competitive player to calculate what I call his <i><b>upset distance</b></i> to the best player in the world at this day, MkLeo.</div>
+          <div class="text-content__text mt-3">This web app goal is to allow any <b>Super Smash Bros. Ultimate</b> competitive player to calculate what I call his <i><b>upset distance</b></i> to the best player in the world at this day, MkLeo. This is better known as <i><b>the MkLeo Number</b></i>.</div>
           <div class="text-content__text">This is a personal non-profit project made on my free time. I really intend to spend more time on building cool tools for the smash community, so don't hesitate to <a href="https://twitter.com/UnCalinSSB" target='_blank'>follow me on twitter</a> to keep you informed about my new projects (No worries, I tweet very sparingly, and only about smash). You can make suggestions for new tools too.</div>
 
           <div class="text-content__subtitle mt-3">The Upset Distance</div>
@@ -333,10 +347,10 @@
 
           <div class="text-content__subtitle mt-3">The Data</div>
           <div class="text-content__text">I'm using data from <a href="https://smashdata.gg/" target='_blank'>The Player Database</a>&#8288;. Go check it out, it's a really nice website that aggregates and displays data about Smash players. They've done a really nice work of reconciliation of player ids from different sources like smash.gg or challonge, there was not point for me in trying to re-do it.</div>
-          <div class="text-content__text">I'm accounting for all the Smash Ultimate sets on the Player Database, excepts for DQs. This means that some Online tournaments are used for the path calculation too. I may change this in the future, or make it an option. If this is important to you, don't hesitate to make yourself heard on twitter.</div>
+          <div class="text-content__text">I'm accounting for all the Smash Ultimate sets on the Player Database, excepts for DQs. A lot of people requested it, so it is now possible to filter out online tournaments from the calculation!</div>
 
           <div class="text-content__subtitle mt-3">Suggestions</div>
-          <div class="text-content__text">As already said above, if you have any ideas or suggestions, please make yourself heard by <a href="https://twitter.com/UnCalinSSB" target='_blank'>taging me on Twitter</a>&#8288;. You can also private message me, but i'm not gonna lie&nbsp;: I'll be more easily convinced if I can see that people share your opinion.</div>
+          <div class="text-content__text">If you have any ideas or suggestions, please make yourself heard by <a href="https://twitter.com/UnCalinSSB" target='_blank'>taging me on Twitter</a>&#8288;. You can also private message me, but i'm not gonna lie&nbsp;: I'll be more easily convinced if I can see that people share your opinion.</div>
           <div class="text-content__text">If you witness any bugs in the app, same thing, you can tell me on twitter. If you prefer you can also raise an issue on <a href="https://github.com/leopons/smash-upset-distance__backend" target='_blank'>the public Github repository</a>&#8288;.</div>
 
         </div>

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is the front-end of a web app. The app goal is to allow any Super Smash Bros Ultimate competitive player to calculate what I call his 'upset distance' to the best player in the world at this day, MkLeo.
+This is the front-end of a web app. The app goal is to allow any Super Smash Bros Ultimate competitive player to calculate what I call his 'upset distance' to the best player in the world at this day, MkLeo. This is better known as 'the MkLeo Number'.
 
 Read more about that on [the backend repo](https://github.com/leopons/smash-upset-distance__backend).
 

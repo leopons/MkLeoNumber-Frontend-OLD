@@ -234,6 +234,13 @@ a.text-content__cta {
   font-size: 1.2em;
 }
 
+a.text-content__offline-switch {
+  color: white;
+  background-color: #5db7cd;
+  border-radius: 100px;
+  padding: 5px 12px;
+  margin-top: 10px;
+}
 
 @media (min-width: 540px) {
 }
